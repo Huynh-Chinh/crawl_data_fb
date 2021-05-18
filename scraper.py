@@ -89,50 +89,6 @@ class CollectPosts(object):
                 utils.write_to_csv(self.out_file, analysis)
             except:pass
 
-            # get comment
-            ""
-            tmp = post.find_element_by_class_name("commentable_item")
-            out = []
-            # click to open comments
-            ele = tmp.find_element_by_class_name('_4vn2').find_element_by_class_name("_3hg-")
-            ele.click()
-
-            # 查看更多留言、查看更多回覆(view more comments)
-            while True:
-                try:
-                    # wait for loading cycle icon to disappear
-                    WebDriverWait(tmp, 8).until_not(
-                        EC.presence_of_element_located((By.CSS_SELECTOR, '.mls.img._55ym._55yn._55yo'))
-                    )
-                    pager = WebDriverWait(tmp, 8).until(
-                        EC.visibility_of_element_located((By.CLASS_NAME, 'UFIPagerLink'))
-                    )
-                    pager.click()
-                except StaleElementReferenceException:
-                    print('element not attached to the page')
-                except TimeoutException:
-                    print('done "view more comments"')
-                    break
-            try:
-                tmp.find_element_by_class_name("_3hg").click()
-                print("da click")
-            except:pass
-
-            tmp2 = tmp.find_element_by_class_name("_7a8-")
-            print("da tim thay 7a9a")
-            cmmts = tmp2.find_element_by_class_name("_42ef")
-            print("da tim thay 42ef")
-            print(cmmts)
-            input()
-
-            for counts, cmm in enumerate(cmmts):
-                textcm = cmm.find_element_by_class_name("_3l3x").text
-                out.append(utils.strip(textcm))
-
-            print(out)
-            input()
-
-
     def collect_groups(self, group):
         # navigate to page
         self.browser.get(
